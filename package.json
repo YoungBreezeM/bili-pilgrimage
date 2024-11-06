@@ -1,5 +1,5 @@
 {
-  "name": "bili-mobile",
+  "name": "bili-pilgrimage",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,7 +13,10 @@
     "vue": "^3.3.4"
   },
   "devDependencies": {
+    "@vant/auto-import-resolver": "^1.2.1",
     "@vitejs/plugin-vue": "^4.2.3",
+    "unplugin-auto-import": "^0.18.3",
+    "unplugin-vue-components": "^0.27.4",
     "vite": "^4.4.5"
   }
 }
