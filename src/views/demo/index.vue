@@ -1,58 +1,93 @@
 <script setup lang="ts">
 import { reactive } from "vue";
+import { LazyImg, Waterfall } from "vue-waterfall-plugin-next";
+import "vue-waterfall-plugin-next/dist/style.css";
 
 defineOptions({
   name: "Demo"
 });
 
 const contentList = reactive([
-  "✔ ⚡ Vue3 + Vite5",
-  "✔ 🍕 TypeScript",
-  "✔ ✨ Vant4 组件库",
-  "✔ 🌀 Tailwindcss 原子类框架",
-  "✔ 👏 集成多种图标方案",
-  "✔ 🍍 Pinia 状态管理",
-  "✔ 🌓 支持深色模式",
-  "✔ Vue-router 4",
-  "✔ vmin 视口适配",
-  "✔ Axios 封装",
-  "✔ 打包资源 gzip 压缩",
-  "✔ 开发环境支持 Mock 数据",
-  "✔ ESLint",
-  "✔ 首屏加载动画",
-  "✔ 开发环境调试面板"
+  { id: 1, url: "/images/2233.jpg", width: 100, height: 150 },
+  { id: 2, url: "/images/2233.jpg", width: 120, height: 200 },
+  { id: 3, url: "/images/2233.jpg", width: 150, height: 180 },
+  { id: 4, url: "/images/2233.jpg", width: 140, height: 160 },
+  { id: 4, url: "/images/2233.jpg", width: 140, height: 160 },
+  { id: 1, url: "/images/2233.jpg", width: 100, height: 150 },
+  { id: 2, url: "/images/2233.jpg", width: 120, height: 200 },
+  { id: 3, url: "/images/2233.jpg", width: 150, height: 180 },
+  { id: 4, url: "/images/2233.jpg", width: 140, height: 160 },
+  { id: 4, url: "/images/2233.jpg", width: 140, height: 160 }
+  // 更多数据...
 ]);
+
+const breakpoints = reactive({
+  1200: {
+    // when wrapper width < 1200
+    rowPerView: 3
+  },
+  800: {
+    // when wrapper width < 800
+    rowPerView: 2
+  },
+  500: {
+    // when wrapper width < 500
+    rowPerView: 2
+  }
+});
 </script>
 
 <template>
-  <div class="demo-content px-[12px]">
-    <img
-      class="block w-[120px] mx-auto mb-[20px] pt-[30px]"
-      alt="Vue logo"
-      src="~@/assets/logo_melomini.png"
-    />
-    <div class="pl-[12px] border-l-[3px] border-[color:#41b883]">
-      <a
-        class="flex items-center"
-        href="https://github.com/yulimchen/vue3-h5-template"
-        target="_blank"
-      >
-        <svg-icon class="text-[20px] mr-[8px]" name="github" />
-        <h3 class="font-bold text-[18px] my-[4px]">Vue3-h5-template</h3>
-        <svg-icon class="text-[12px] ml-[5px]" name="link" />
-      </a>
-    </div>
-    <div
-      class="text-[14px] py-[2px] px-[10px] rounded-[4px] bg-[var(--color-block-background)] mt-[14px]"
+  <div class="home">
+    <Waterfall
+      :list="contentList"
+      :breakpoints="breakpoints"
+      backgroundColor="rgb(211, 211, 211)"
     >
-      <p class="my-[14px] leading-[24px]">
-        🌱 基于 Vue3 全家桶、TypeScript、Vite 构建工具，开箱即用的 H5
-        移动端项目基础模板
-      </p>
-    </div>
-
-    <div class="demo-main">
-      <van-cell v-for="(item, idx) in contentList" :key="idx" :title="item" />
-    </div>
+      <template #default="{ item, url, index }">
+        <div class="card">
+          <LazyImg :url="item.url" />
+          <p class="text">这是具体内容</p>
+        </div>
+      </template>
+    </Waterfall>
   </div>
 </template>
+
+<style scoped>
+.home {
+  width: 100%;
+  height: 100vh;
+}
+
+.item {
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+.card {
+  background: white;
+
+  color: black;
+}
+.waterfall-item {
+  border-radius: 5px;
+}
+/* .lazy__img[lazy="loading"] {
+  padding: 5em 0;
+  width: 48px;
+}
+
+.lazy__img[lazy="loaded"] {
+  width: 100%;
+}
+
+.lazy__img[lazy="error"] {
+  padding: 5em 0;
+  width: 48px;
+} */
+</style>
