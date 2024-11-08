@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { LazyImg, Waterfall } from "vue-waterfall-plugin-next";
 import "vue-waterfall-plugin-next/dist/style.css";
 
@@ -35,22 +35,34 @@ const breakpoints = reactive({
     rowPerView: 2
   }
 });
+//
+const active = ref(0);
 </script>
 
 <template>
   <div class="home">
-    <Waterfall
-      :list="contentList"
-      :breakpoints="breakpoints"
-      backgroundColor="rgb(211, 211, 211)"
-    >
-      <template #default="{ item, url, index }">
-        <div class="card">
-          <LazyImg :url="item.url" />
-          <p class="text">这是具体内容</p>
-        </div>
-      </template>
-    </Waterfall>
+    <van-tabs v-model:active="active">
+      <van-tab v-for="index in 8" v-bind:key="index" :title="'标签 ' + index">
+        <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+          <van-swipe-item> <img src="/images/2233s.jpeg" /> </van-swipe-item>
+          <van-swipe-item><img src="/images/2233s.jpeg" /></van-swipe-item>
+          <van-swipe-item><img src="/images/2233s.jpeg" /></van-swipe-item>
+          <van-swipe-item><img src="/images/2233s.jpeg" /></van-swipe-item>
+        </van-swipe>
+        <Waterfall
+          :list="contentList"
+          :breakpoints="breakpoints"
+          backgroundColor="rgb(211, 211, 211)"
+        >
+          <template #default="{ item, url, index }">
+            <div class="card">
+              <LazyImg :url="item.url" />
+              <p class="text">这是具体内容</p>
+            </div>
+          </template>
+        </Waterfall>
+      </van-tab>
+    </van-tabs>
   </div>
 </template>
 
@@ -76,6 +88,9 @@ img {
 }
 .waterfall-item {
   border-radius: 5px;
+}
+
+.my-swipe {
 }
 /* .lazy__img[lazy="loading"] {
   padding: 5em 0;

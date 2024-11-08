@@ -14,7 +14,7 @@ const routes: Array<RouteRecordRaw> = [
         name: "Demo",
         component: Demo,
         meta: {
-          title: "主页"
+          title: "首页"
         }
       },
       {
@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
         name: "Tools",
         component: () => import("@/views/tools/index.vue"),
         meta: {
-          title: "工具"
+          title: "动态"
         }
       },
       {
@@ -30,7 +30,16 @@ const routes: Array<RouteRecordRaw> = [
         name: "About",
         component: () => import("@/views/about/index.vue"),
         meta: {
-          title: "关于",
+          title: "会员购",
+          noCache: true
+        }
+      },
+      {
+        path: "my",
+        name: "my",
+        component: () => import("@/views/about/index.vue"),
+        meta: {
+          title: "我的",
           noCache: true
         }
       }
