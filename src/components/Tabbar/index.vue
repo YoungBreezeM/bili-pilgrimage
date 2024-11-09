@@ -13,53 +13,69 @@
       :to="item.to"
     >
       <div v-if="index === 2">
-        <van-button class="center-btn" icon="plus" />
+        <van-button
+          class="center-btn"
+          icon="photograph"
+          round
+          @click="toPush"
+        />
       </div>
     </van-tabbar-item>
   </van-tabbar>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
-
+import { ref, reactive, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+const router = useRouter();
 const active = ref(0);
 const tabbarData = reactive([
   {
     icon: "wap-home-o",
-    title: "首页",
+    title: "推荐",
     to: {
-      name: "Demo"
+      name: "/pointlist"
     }
   },
   {
     icon: "fire-o",
-    title: "动态",
+    title: "热门",
     to: {
-      name: "Tools"
+      name: "hot"
     }
   },
   {
     icon: "",
-    title: "添加",
+    title: "发布",
     to: {
-      name: "Tools"
+      name: "/push"
     }
   },
   {
-    icon: "gift-o",
-    title: "会员购",
+    icon: "bookmark-o",
+    title: "关注",
     to: {
-      name: "About"
+      name: "attention",
+      query: {
+        tabName: "attention"
+      }
     }
   },
   {
     icon: "user-o",
     title: "我的",
     to: {
-      name: "About"
+      name: "d-my"
     }
   }
 ]);
+onMounted(() => {
+  const route = useRoute();
+  console.log(route.query);
+});
+const toPush = () => {
+  router.push("/push");
+};
 </script>
 <style scoped>
 /* 定义 Tabbar 的样式 */
@@ -76,7 +92,7 @@ const tabbarData = reactive([
   color: white;
   background-color: #f69; /* 中间按钮的背景色 */
   position: relative;
-  bottom: 10px;
+  bottom: 0.5rem;
   z-index: 999;
 }
 </style>

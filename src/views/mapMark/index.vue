@@ -1,14 +1,30 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted, watch } from "vue";
 import { LazyImg, Waterfall } from "vue-waterfall-plugin-next";
 import "vue-waterfall-plugin-next/dist/style.css";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import tabbar from "@/components/Tabbar/index.vue";
 defineOptions({
   name: "Demo"
 });
 
 const router = useRouter();
+const route = useRoute();
+const activeIndex = ref("list");
+onMounted(() => {
+  //
+  activeIndex.value = route.query.tabName ? route.query.tabName : "list";
+});
 
+watch(
+  () => route.fullPath,
+  (newPath, oldPath) => {
+    if (newPath !== oldPath) {
+      activeIndex.value = route.query.tabName ? route.query.tabName : "list";
+      // 路由变化时触发的逻辑
+    }
+  }
+);
 const contentList = reactive([
   { id: 1, url: "/images/2233.jpg", width: 100, height: 150 },
   { id: 2, url: "/images/2233.jpg", width: 120, height: 200 },
@@ -38,7 +54,7 @@ const breakpoints = reactive({
   }
 });
 //
-const active = ref(0);
+
 const toVideo = () => {
   router.push("/video");
 };
@@ -46,27 +62,60 @@ const toVideo = () => {
 const toMy = () => {
   router.push("/my");
 };
+const toBack = () => {
+  router.back();
+};
+const toPointDetail = () => {
+  router.push("/point/detail");
+};
 </script>
 
 <template>
-  <div class="home">
-    <img src="/images/home.png" />
-    <van-button class="my" type="primary" @click="toMy" />
-    <van-button class="detail" type="primary" @click="toVideo" />
+  <div class="map">
+    <div class="map-title">
+      <van-icon name="arrow-left" @click="toBack" />
+    </div>
+    <div class="map-waterfall">地图</div>
   </div>
 </template>
 
 <style scoped>
-.home {
+.map {
   width: 100%;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-content {
+  width: 100%;
+  height: 25rem;
+  border: 1px solid #ccc;
+}
+
+.map-detail {
+  padding: 0.5rem;
+  border: 1px solid #c8c5c5;
+  display: flex;
+  align-items: center;
 }
 
 .item {
   margin-bottom: 16px;
   overflow: hidden;
 }
-
+.map-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  margin: 1rem;
+  height: 3rem;
+}
+.map-waterfall {
+  height: 60rem;
+  overflow-y: auto;
+}
 img {
   width: 100%;
   height: auto;

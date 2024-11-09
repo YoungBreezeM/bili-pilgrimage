@@ -43,16 +43,36 @@ const toVideo = () => {
   router.push("/video");
 };
 
-const toMy = () => {
-  router.push("/my");
+const toPushSame = () => {
+  router.push("/push/same");
 };
 </script>
 
 <template>
   <div class="home">
-    <img src="/images/home.png" />
-    <van-button class="my" type="primary" @click="toMy" />
-    <van-button class="detail" type="primary" @click="toVideo" />
+    <img src="/images/point-detail.png" />
+    <!-- <van-button class="my" type="primary" @click="toMy" /> -->
+    <div class="detail" type="primary" @click="toVideo">
+      <div class="desc">
+        <div class="desc-left">
+          <p>
+            <van-icon name="location" color="#f69" /><span
+              style="font-weight: 900"
+              >北京 故宫博物院- 4.9 分</span
+            >
+          </p>
+          <p style="color: #ccc; font-size: 0.9rem">博物馆东城区</p>
+        </div>
+        <div class="desc-right">
+          <p style="font-size: 1.2rem">
+            <van-icon name="star-o" /><span> 12.7 万</span>
+          </p>
+          <p>
+            <van-button type="primary" @click="toPushSame">拍同款</van-button>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -92,9 +112,26 @@ img {
 .detail {
   position: absolute;
   width: 100%;
-  height: 13rem;
-  top: 24rem;
-  background-color: transparent !important;
+  height: 10rem;
+  top: 35rem;
+  background: white;
+  padding: 0.5rem;
+}
+.desc {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-radius: 5px;
+  flex-direction: row;
+  background: rgba(249, 246, 250, 0.887);
+}
+.desc-left {
+  width: 70%;
+  padding: 1rem;
+}
+.desc-right {
+  width: 30%;
+  padding: 1rem;
 }
 /* .lazy__img[lazy="loading"] {
   padding: 5em 0;

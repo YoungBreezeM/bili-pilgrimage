@@ -39,20 +39,15 @@ const breakpoints = reactive({
 });
 //
 const active = ref(0);
-const toVideo = () => {
-  router.push("/video");
-};
-
-const toMy = () => {
-  router.push("/my");
+const toPointList = () => {
+  router.push("/point/list");
 };
 </script>
 
 <template>
   <div class="home">
-    <img src="/images/home.png" />
-    <van-button class="my" type="primary" @click="toMy" />
-    <van-button class="detail" type="primary" @click="toVideo" />
+    <img src="/images/my.png" />
+    <van-button class="my" type="primary" @click="toPointList" />
   </div>
 </template>
 
@@ -84,8 +79,8 @@ img {
   position: absolute;
   width: 5rem;
   height: 5rem;
-  bottom: 1rem;
-  right: 0.5rem;
+  bottom: 7rem;
+  left: 1rem;
   z-index: 99;
   background-color: transparent !important;
 }
