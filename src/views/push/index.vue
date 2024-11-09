@@ -56,9 +56,31 @@ const breakpoints = reactive({
   }
 });
 //
+const pushDataToLocalStorage = (key, newData) => {
+  // 1. 从 localStorage 获取现有数据
+  let data = localStorage.getItem(key);
 
+  // 如果 data 为空，则初始化为一个空数组
+  if (!data) {
+    data = [];
+  } else {
+    // 如果 data 存在，解析为数组
+    data = JSON.parse(data);
+  }
+
+  // 2. 使用 push() 添加新数据
+  data.push(newData);
+
+  // 3. 将更新后的数组存回 localStorage
+  localStorage.setItem(key, JSON.stringify(data));
+};
 const toPushList = () => {
-  router.push("/point/list");
+  console.log(form.value);
+  form.value.id = Date.now();
+  form.value.name = "xx";
+  form.value.img_url = "/images/jianan8.png";
+  pushDataToLocalStorage("push-list", form.value);
+  // router.push("/point/list");
 };
 
 const toMy = () => {
@@ -119,7 +141,10 @@ const deleteFa = a => {
 };
 const form = ref({
   title: "",
-  desc: ""
+  desc: "",
+  id: 0,
+  name: "",
+  img_url: ""
 });
 </script>
 

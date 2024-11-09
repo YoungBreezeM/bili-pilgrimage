@@ -5,6 +5,7 @@ import "vue-waterfall-plugin-next/dist/style.css";
 import { useRoute, useRouter } from "vue-router";
 import tabbar from "@/components/Tabbar/index.vue";
 import data from "@/assets/data.json";
+
 defineOptions({
   name: "Demo"
 });
@@ -67,7 +68,7 @@ const toVideo = () => {
 };
 
 const toList = () => {
-  router.push("/point/list");
+  router.push("/push");
 };
 const toBack = () => {
   router.back();
@@ -85,6 +86,13 @@ const triggerFileInput = () => {
   }
 };
 
+const save = () => {
+  show.value = true;
+  setTimeout(() => {
+    show.value = false;
+  }, 1000);
+};
+
 // 处理图片上传
 const onImageUpload = (event: Event) => {
   const input = event.target as HTMLInputElement;
@@ -100,10 +108,15 @@ const onImageUpload = (event: Event) => {
     reader.readAsDataURL(file);
   }
 };
+const show = ref(false);
 </script>
 
 <template>
   <div class="map">
+    <van-notify v-model:show="show" type="success">
+      <van-icon name="bell" style="margin-right: 4px" />
+      <span>保存成功</span>
+    </van-notify>
     <div class="map-title">
       <van-icon name="arrow-left" style="margin-left: 0.7rem" @click="toBack" />
     </div>
@@ -144,13 +157,13 @@ const onImageUpload = (event: Event) => {
           margin-top: 1rem;
         "
       >
-        <van-button round style="width: 30%">存本地</van-button>
+        <van-button round style="width: 30%" @click="save">存本地</van-button>
         <van-button
           type="primary"
           round
           style="width: 65%; margin-left: 1rem"
           @click="toList"
-          >发布</van-button
+          >下一步</van-button
         >
       </p>
       <p style="color: #ccc; font-size: 0.8rem; margin-top: 2rem">

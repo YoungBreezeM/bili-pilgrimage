@@ -65,10 +65,14 @@ const watchHeight = data => {
     isShow.value = false;
   }
 };
+const toBack = () => {
+  router.back();
+};
 </script>
 
 <template>
   <div class="map">
+    <van-icon name="arrow-left" style="font-size: 2rem" @click="toBack" />
     <div class="map-title">
       <p style="font-size: 1.5rem">
         上海市<span

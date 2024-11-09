@@ -66,9 +66,6 @@ const toMy = () => {
 const toBack = () => {
   router.back();
 };
-const toPointDetail = () => {
-  router.push("/point/detail");
-};
 </script>
 
 <template>
@@ -85,7 +82,7 @@ const toPointDetail = () => {
         backgroundColor="rgb(211, 211, 211)"
       >
         <template #default="{ item, url, index }">
-          <div class="card" @click="toPointDetail">
+          <div class="card">
             <LazyImg :url="item.img_url" />
             <div class="carf-desc">
               <p style="margin-left: 0.5rem">{{ item.name }}</p>

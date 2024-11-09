@@ -52,12 +52,25 @@ const active = ref(0);
 const toPushSame = () => {
   router.push({ path: "/push/same/", query: route.query });
 };
+const toBack = () => {
+  router.back();
+};
 </script>
 
 <template>
   <div class="home">
     <img src="/images/point-detail.png" />
-    <!-- <van-button class="my" type="primary" @click="toMy" /> -->
+    <van-icon
+      name="arrow-left"
+      style="
+        position: absolute;
+        top: 5rem;
+        left: 0.8rem;
+        z-index: 100;
+        font-size: 2rem;
+      "
+      @click="toBack"
+    />
     <div class="p-img"><img :src="point.img_url" /></div>
     <div class="p-img2"><img :src="point.img_url" /></div>
     <div class="detail" type="primary">

@@ -78,11 +78,19 @@ const breakpoints = reactive({
 const toMap = id => {
   router.push({ name: "/map", query: { id: id } });
 };
+const toBack = () => {
+  router.back();
+};
 </script>
 
 <template>
   <div class="home">
     <img src="/images/video.png" />
+    <van-icon
+      name="arrow-left"
+      style="font-size: 2rem; position: absolute; top: 1rem; z-index: 1000"
+      @click="toBack"
+    />
     <div class="video-plane">
       <video controls class="video-player">
         <source src="/videos/jianan.mp4" type="video/mp4" />
