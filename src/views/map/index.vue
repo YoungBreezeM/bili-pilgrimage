@@ -2,13 +2,15 @@
 import { reactive, ref } from "vue";
 import { LazyImg, Waterfall } from "vue-waterfall-plugin-next";
 import "vue-waterfall-plugin-next/dist/style.css";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import Map from "@/components/Map/index.vue";
+import data from "@/assets/data.json";
 defineOptions({
   name: "Demo"
 });
 
 const router = useRouter();
+const route = useRoute();
 
 const contentList = reactive([
   { id: 1, url: "/images/2233.jpg", width: 100, height: 150 },
@@ -45,7 +47,7 @@ const toVideo = () => {
 };
 
 const toPushSame = () => {
-  router.push("/push/same");
+  router.push({ path: "/push/same", query: route.query });
 };
 const anchors = [
   245,
@@ -76,7 +78,7 @@ const watchHeight = data => {
             padding: 0.2rem;
             margin-left: 0.5rem;
           "
-          >人文景观</span
+          >动漫场景</span
         >
       </p>
       <p style="font-size: 0.8rem; color: #c8c5c5">Shanghai</p>
@@ -106,17 +108,17 @@ const watchHeight = data => {
       </template>
       <div class="map-waterfall">
         <Waterfall
-          :list="contentList"
+          :list="data.points"
           :breakpoints="breakpoints"
           backgroundColor="rgb(211, 211, 211)"
         >
           <template #default="{ item, url, index }">
             <div class="card">
-              <LazyImg :url="item.url" />
+              <LazyImg :url="item.img_url" />
               <div class="carf-desc">
-                <p style="margin-left: 0.5rem">圣地巡礼</p>
+                <p style="margin-left: 0.5rem">{{ item.name }}</p>
                 <p style="margin-left: 0.5rem">
-                  up xxx
+                  [up] {{ item.username }}
                   <span style="float: right; margin-right: 0.5rem">...</span>
                 </p>
               </div>

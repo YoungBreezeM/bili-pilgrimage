@@ -3,7 +3,8 @@ import { reactive, ref, onMounted, watch } from "vue";
 import { LazyImg, Waterfall } from "vue-waterfall-plugin-next";
 import "vue-waterfall-plugin-next/dist/style.css";
 import { useRoute, useRouter } from "vue-router";
-import tabbar from "@/components/Tabbar/index.vue";
+import AiMap from "@/components/Map/index.vue";
+
 defineOptions({
   name: "Demo"
 });
@@ -68,6 +69,7 @@ const toBack = () => {
 const toPointDetail = () => {
   router.push("/point/detail");
 };
+const showBottom = ref(false);
 </script>
 
 <template>
@@ -75,7 +77,9 @@ const toPointDetail = () => {
     <div class="map-title">
       <van-icon name="arrow-left" @click="toBack" />
     </div>
-    <div class="map-waterfall">地图</div>
+    <div class="map-waterfall">
+      <AiMap />
+    </div>
   </div>
 </template>
 

@@ -8,7 +8,9 @@ defineOptions({
   name: "Demo"
 });
 import { useRouter } from "vue-router";
+import data from "@/assets/data.json";
 
+data.points.sort((a, b) => a.video_timestamp - b.video_timestamp);
 const router = useRouter();
 const contentList = reactive([
   { id: 1, url: "/images/2233.jpg", width: 100, height: 150 },
@@ -24,6 +26,13 @@ const contentList = reactive([
   // 更多数据...
 ]);
 
+const formatTime = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60); // 计算分钟
+  const remainingSeconds = seconds % 60; // 计算剩余的秒数
+
+  // 格式化为 mm:ss 格式
+  return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+};
 const points = reactive([
   { title: "xx", time: "01:02" },
   { title: "xx", time: "01:02" },
@@ -66,8 +75,8 @@ const breakpoints = reactive({
   }
 });
 //
-const toMap = () => {
-  router.push({ name: "/map" });
+const toMap = id => {
+  router.push({ name: "/map", query: { id: id } });
 };
 </script>
 
@@ -76,10 +85,7 @@ const toMap = () => {
     <img src="/images/video.png" />
     <div class="video-plane">
       <video controls class="video-player">
-        <source
-          src="https://www.w3schools.com/html/movie.mp4"
-          type="video/mp4"
-        />
+        <source src="/videos/jianan.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
@@ -95,13 +101,19 @@ const toMap = () => {
         </div>
       </template>
       <div v-if="isShow" class="map-points">
-        <div v-for="(item, index) in points" v-bind:key="index" class="map-box">
+        <div
+          v-for="(item, index) in data.points"
+          v-bind:key="index"
+          class="map-box"
+        >
           <div map-box-left>
-            <img class="map-box-left-img" src="/images/2233s.jpeg" />
+            <img class="map-box-left-img" :src="item.img_url" />
           </div>
-          <div class="map-box-content" @click="toMap">
-            <p>城市</p>
-            <p class="desc" style="color: rgb(142, 142, 141)">具体地址</p>
+          <div class="map-box-content" @click="toMap(item.id)">
+            <p>{{ item.name }}</p>
+            <p class="desc" style="color: rgb(142, 142, 141)">
+              {{ item.description }}
+            </p>
             <p class="desc" style="margin-top: 1rem">
               <van-icon name="location-o" />568人去过
             </p>
@@ -116,13 +128,19 @@ const toMap = () => {
 
         <div class="point-box">
           <div
-            v-for="(item, index) in points"
+            v-for="(item, index) in data.points"
             v-bind:key="index"
             class="point-item"
-            @click="toMap"
+            @click="toMap(item.id)"
           >
-            <p>{{ item.time }}</p>
-            <p>{{ item.title }}</p>
+            <img :src="item.img_url" style="" />
+            <!-- <p style="color: #ccc"></p> -->
+            <p style="font-size: 0.8rem; overflow: hidden">
+              <span style="color: #ccc; margin-right: 1px">{{
+                formatTime(item.video_timestamp)
+              }}</span
+              >{{ item.name }}
+            </p>
           </div>
         </div>
       </div>
@@ -200,6 +218,9 @@ img {
   background: white;
   border-radius: 3px;
   margin: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   flex-shrink: 0; /* 禁止压缩 */
 }
 /* .lazy__img[lazy="loading"] {
@@ -227,6 +248,7 @@ img {
   justify-content: top;
   align-items: center;
   background: white;
+  overflow-y: auto;
 }
 .map-box {
   width: 100%;

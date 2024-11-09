@@ -4,6 +4,7 @@ import { LazyImg, Waterfall } from "vue-waterfall-plugin-next";
 import "vue-waterfall-plugin-next/dist/style.css";
 import { useRoute, useRouter } from "vue-router";
 import tabbar from "@/components/Tabbar/index.vue";
+import data from "@/assets/data.json";
 defineOptions({
   name: "Demo"
 });
@@ -76,20 +77,20 @@ const toPointDetail = () => {
       <van-icon name="arrow-left" @click="toBack" />
       <van-search placeholder="搜索圣地" shape="round" style="width: 90%" />
     </div>
-    <div><img src="/images/my-detail.png" /></div>
+    <div><img src="/images/my-detail1.png" /></div>
     <div v-if="activeIndex == 'list'" class="map-waterfall">
       <Waterfall
-        :list="contentList"
+        :list="data.points"
         :breakpoints="breakpoints"
         backgroundColor="rgb(211, 211, 211)"
       >
         <template #default="{ item, url, index }">
           <div class="card" @click="toPointDetail">
-            <LazyImg :url="item.url" />
+            <LazyImg :url="item.img_url" />
             <div class="carf-desc">
-              <p style="margin-left: 0.5rem">圣地巡礼</p>
+              <p style="margin-left: 0.5rem">{{ item.name }}</p>
               <p style="margin-left: 0.5rem">
-                up xxx
+                [up] {{ item.username }}
                 <span style="float: right; margin-right: 0.5rem">...</span>
               </p>
             </div>

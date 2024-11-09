@@ -18,6 +18,7 @@ coverage
 /cypress/screenshots/
 
 # Editor directories and files
+*.mp4
 .idea
 *.suo
 *.ntvs*

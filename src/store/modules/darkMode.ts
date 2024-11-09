@@ -26,10 +26,10 @@ export const useDarkModeStore = defineStore({
       const toggle = () => {
         this.darkMode = !this.darkMode;
         if (this.darkMode) {
-          document.documentElement.classList.add("dark");
+          document.documentElement.classList.add("light");
           window.localStorage.setItem(darkModeKey, "true");
         } else {
-          document.documentElement.classList.remove("dark");
+          document.documentElement.classList.remove("light");
           window.localStorage.setItem(darkModeKey, "false");
         }
       };

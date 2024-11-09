@@ -5,6 +5,10 @@ import "vue-waterfall-plugin-next/dist/style.css";
 import { useRoute, useRouter } from "vue-router";
 import tabbar from "@/components/Tabbar/index.vue";
 import AiMap from "@/components/Map/index.vue";
+import data from "@/assets/data.json";
+
+const copy = JSON.parse(JSON.stringify(data));
+const list = [...data.points, ...data.points];
 defineOptions({
   name: "Demo"
 });
@@ -66,8 +70,8 @@ const toMy = () => {
 const toBack = () => {
   router.back();
 };
-const toPointDetail = () => {
-  router.push("/point/detail");
+const toPointDetail = id => {
+  router.push({ path: "/point/detail", query: { id } });
 };
 </script>
 
@@ -79,17 +83,17 @@ const toPointDetail = () => {
     </div>
     <div v-if="activeIndex == 'list'" class="map-waterfall">
       <Waterfall
-        :list="contentList"
+        :list="list"
         :breakpoints="breakpoints"
         backgroundColor="rgb(211, 211, 211)"
       >
         <template #default="{ item, url, index }">
-          <div class="card" @click="toPointDetail">
-            <LazyImg :url="item.url" />
+          <div class="card" @click="toPointDetail(item.id)">
+            <LazyImg :url="item.img_url" />
             <div class="carf-desc">
-              <p style="margin-left: 0.5rem">圣地巡礼</p>
+              <p style="margin-left: 0.5rem">{{ item.name }}</p>
               <p style="margin-left: 0.5rem">
-                up xxx
+                [up] {{ item.username }}
                 <span style="float: right; margin-right: 0.5rem">...</span>
               </p>
             </div>

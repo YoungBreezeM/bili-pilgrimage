@@ -1,14 +1,20 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { LazyImg, Waterfall } from "vue-waterfall-plugin-next";
 import "vue-waterfall-plugin-next/dist/style.css";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import data from "@/assets/data.json";
 defineOptions({
   name: "Demo"
 });
-
+const point = ref({});
 const router = useRouter();
+const route = useRoute();
 
+onMounted(() => {
+  const { id } = route.query;
+  point.value = data.points.find(i => i.id == id);
+});
 const contentList = reactive([
   { id: 1, url: "/images/2233.jpg", width: 100, height: 150 },
   { id: 2, url: "/images/2233.jpg", width: 120, height: 200 },
@@ -39,12 +45,12 @@ const breakpoints = reactive({
 });
 //
 const active = ref(0);
-const toVideo = () => {
-  router.push("/video");
-};
+// const toVideo = () => {
+//   router.push("/video");
+// };
 
 const toPushSame = () => {
-  router.push("/push/same");
+  router.push({ path: "/push/same/", query: route.query });
 };
 </script>
 
@@ -52,16 +58,18 @@ const toPushSame = () => {
   <div class="home">
     <img src="/images/point-detail.png" />
     <!-- <van-button class="my" type="primary" @click="toMy" /> -->
-    <div class="detail" type="primary" @click="toVideo">
+    <div class="p-img"><img :src="point.img_url" /></div>
+    <div class="p-img2"><img :src="point.img_url" /></div>
+    <div class="detail" type="primary">
       <div class="desc">
         <div class="desc-left">
           <p>
             <van-icon name="location" color="#f69" /><span
               style="font-weight: 900"
-              >北京 故宫博物院- 4.9 分</span
+              >{{ point.name }}- 4.9 分</span
             >
           </p>
-          <p style="color: #ccc; font-size: 0.9rem">博物馆东城区</p>
+          <!-- <p style="color: #ccc; font-size: 0.9rem">博物馆东城区</p> -->
         </div>
         <div class="desc-right">
           <p style="font-size: 1.2rem">
@@ -73,6 +81,7 @@ const toPushSame = () => {
         </div>
       </div>
     </div>
+    <div class="end" />
   </div>
 </template>
 
@@ -117,6 +126,13 @@ img {
   background: white;
   padding: 0.5rem;
 }
+.end {
+  width: 100%;
+  height: 9rem;
+  position: absolute;
+  background-color: white;
+  bottom: 6rem;
+}
 .desc {
   width: 100%;
   height: 100%;
@@ -132,6 +148,18 @@ img {
 .desc-right {
   width: 30%;
   padding: 1rem;
+}
+.p-img {
+  width: 100%;
+  height: 30rem;
+  position: absolute;
+  top: 7.5rem;
+}
+.p-img2 {
+  width: 100%;
+  height: 30rem;
+  position: absolute;
+  top: 20rem;
 }
 /* .lazy__img[lazy="loading"] {
   padding: 5em 0;

@@ -10,7 +10,7 @@ import mockDevServerPlugin from "vite-plugin-mock-dev-server";
 import viteCompression from "vite-plugin-compression";
 import { createHtmlPlugin } from "vite-plugin-html";
 import { enableCDN } from "./build/cdn";
-
+import fs from "fs";
 // 当前工作目录路径
 const root: string = process.cwd();
 
@@ -55,6 +55,7 @@ export default defineConfig(({ mode }) => {
       }
     },
     server: {
+      open: true, // 启动时自动打开浏览器
       host: true,
       // 仅在 proxy 中配置的代理前缀， mock-dev-server 才会拦截并 mock
       // doc: https://github.com/pengzhanbo/vite-plugin-mock-dev-server

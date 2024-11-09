@@ -4,17 +4,23 @@ import { LazyImg, Waterfall } from "vue-waterfall-plugin-next";
 import "vue-waterfall-plugin-next/dist/style.css";
 import { useRoute, useRouter } from "vue-router";
 import tabbar from "@/components/Tabbar/index.vue";
+import data from "@/assets/data.json";
 defineOptions({
   name: "Demo"
 });
-
+const checked = ref("1");
 const router = useRouter();
 const route = useRoute();
 const activeIndex = ref("list");
 const radio = ref("1");
+const oldimgUrl = ref("");
 onMounted(() => {
   //
   activeIndex.value = route.query.tabName ? route.query.tabName : "list";
+  const { id } = route.query;
+  let p = data.points.find(i => i.id == id);
+  console.log(p.img_url);
+  oldimgUrl.value = p.img_url;
 });
 
 watch(
@@ -60,8 +66,8 @@ const toVideo = () => {
   router.push("/video");
 };
 
-const toMy = () => {
-  router.push("/my");
+const toList = () => {
+  router.push("/point/list");
 };
 const toBack = () => {
   router.back();
@@ -102,7 +108,7 @@ const onImageUpload = (event: Event) => {
       <van-icon name="arrow-left" style="margin-left: 0.7rem" @click="toBack" />
     </div>
     <div class="diff-imgs">
-      <img class="diff-img" src="/images/2233s.jpeg" />
+      <img class="diff-img" :src="oldimgUrl" />
       <div class="diff-img up-img" @click="triggerFileInput">
         <input
           ref="fileInput"
@@ -122,7 +128,7 @@ const onImageUpload = (event: Event) => {
     <div class="push">
       <p style="display: flex; justify-content: left; align-items: center">
         <span
-          ><van-radio-group value="{{ radio }}" bind:change="onChange">
+          ><van-radio-group v-model="checked" bind:change="onChange">
             <van-radio name="1" checked-color="#f69" /> </van-radio-group
         ></span>
         <span style="font-size: 0.9rem; margin-left: 0.5rem"
@@ -139,7 +145,11 @@ const onImageUpload = (event: Event) => {
         "
       >
         <van-button round style="width: 30%">存本地</van-button>
-        <van-button type="primary" round style="width: 65%; margin-left: 1rem"
+        <van-button
+          type="primary"
+          round
+          style="width: 65%; margin-left: 1rem"
+          @click="toList"
           >发布</van-button
         >
       </p>

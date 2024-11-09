@@ -3,7 +3,8 @@ import { reactive, ref, onMounted, watch } from "vue";
 
 import "vue-waterfall-plugin-next/dist/style.css";
 import { useRoute, useRouter } from "vue-router";
-
+import { url } from "inspector";
+import AiMap from "@/components/Map/index.vue";
 defineOptions({
   name: "Demo"
 });
@@ -56,8 +57,8 @@ const breakpoints = reactive({
 });
 //
 
-const toVideo = () => {
-  router.push("/video");
+const toPushList = () => {
+  router.push("/point/list");
 };
 
 const toMy = () => {
@@ -67,21 +68,22 @@ const toBack = () => {
   router.back();
 };
 const fileList = reactive([
-  {
-    url: "/images/2233.jpg",
-    name: "图片1"
-  },
-  // Uploader 根据文件后缀来判断是否为图片文件
-  // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
-  {
-    url: "/images/2233.jpg",
-    name: "图片2",
-    isImage: true,
-    deletable: true
-  }
+  // {
+  //   url: "/images/2233.jpg",
+  //   name: "图片1"
+  // },
+  // // Uploader 根据文件后缀来判断是否为图片文件
+  // // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
+  // {
+  //   url: "/images/2233.jpg",
+  //   name: "图片2",
+  //   isImage: true,
+  //   deletable: true
+  // }
 ]);
+const showBottom = ref(false);
 const toMapMark = () => {
-  router.push("/map/mark");
+  showBottom.value = true;
 };
 const imageUrl = ref<string | null>(null);
 const fileInput = ref<HTMLInputElement | null>(null);
@@ -108,28 +110,48 @@ const onImageUpload = (event: Event) => {
     reader.readAsDataURL(file);
   }
 };
+const afterRead = file => {
+  fileList.push(file);
+  console.log(file);
+};
+const deleteFa = a => {
+  console.log(a);
+};
+const form = ref({
+  title: "",
+  desc: ""
+});
 </script>
 
 <template>
   <div class="map">
     <div class="map-title">
       <van-icon name="cross" style="margin-left: 0.7rem" @click="toBack" />
-      <van-button type="primary" round style="width: 20%; margin-left: 70%"
+      <van-button
+        type="primary"
+        round
+        style="width: 20%; margin-left: 70%"
+        @click="toPushList"
         >发布</van-button
       >
     </div>
     <div class="diff-imgs">
-      <van-uploader v-model="fileList" multiple />
+      <van-uploader
+        v-model="fileList"
+        multiple
+        :after-read="afterRead"
+        :deletable="false"
+      />
     </div>
     <div>
       <van-cell-group inset>
         <van-field
-          v-model="value"
+          v-model="form.title"
           label=""
           placeholder="标题(选填,20 字以内)"
         />
         <van-field
-          v-model="message"
+          v-model="form.desc"
           rows="10"
           autosize
           label=""
@@ -154,34 +176,13 @@ const onImageUpload = (event: Event) => {
         <van-icon name="arrow" style="margin-left: 70%" />
       </p>
     </div>
-    <!-- <div class="push">
-      <p style="display: flex; justify-content: left; align-items: center">
-        <span
-          ><van-radio-group value="{{ radio }}" bind:change="onChange">
-            <van-radio name="1" checked-color="#f69" /> </van-radio-group
-        ></span>
-        <span style="font-size: 0.9rem; margin-left: 0.5rem"
-          >我已阅读并接受</span
-        >
-        <span style="color: #f69; font-size: 0.9rem">《哔哩哔哩社区公约》</span>
-      </p>
-      <p
-        style="
-          display: flex;
-          justify-content: left;
-          align-items: center;
-          margin-top: 1rem;
-        "
-      >
-        <van-button round style="width: 30%">存本地</van-button>
-        <van-button type="primary" round style="width: 65%; margin-left: 1rem"
-          >发布</van-button
-        >
-      </p>
-      <p style="color: #ccc; font-size: 0.8rem; margin-top: 2rem">
-        若存在非官方商业合作，需要前往电脑网页端投稿并进行商业声...
-      </p>
-    </div> -->
+    <van-popup
+      v-model:show="showBottom"
+      position="bottom"
+      :style="{ height: '80%' }"
+    >
+      <AiMap />
+    </van-popup>
   </div>
 </template>
 

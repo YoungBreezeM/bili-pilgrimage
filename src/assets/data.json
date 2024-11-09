@@ -1,0 +1,99 @@
+{
+  "videos": [
+    {
+      "id": "1",
+      "name": "迦南",
+      "videp_url": "/videos/jianan.mp4"
+    }
+  ],
+  "points": [
+    {
+      "id": "1",
+      "longitude": "121.487204",
+      "latitude": "31.228355",
+      "name": "九曲桥广场",
+      "description": "",
+      "img_url": "/images/jianan1.png",
+      "video_id": "1",
+      "video_timestamp": 861,
+      "username": "笨笨"
+    },
+    {
+      "id": "2",
+      "longitude": "121.474444",
+      "latitude": "31.230693",
+      "name": "大世界人行天桥",
+      "description": "",
+      "img_url": "/images/jianan2.png",
+      "video_id": "1",
+      "video_timestamp": 1007,
+      "username": "清风"
+    },
+    {
+      "id": "3",
+      "longitude": "121.486353",
+      "latitude": "31.238509",
+      "name": "外滩",
+      "description": "",
+      "img_url": "/images/jianan3.png",
+      "video_id": "1",
+      "video_timestamp": 615,
+      "username": "夏珑Syalon"
+    },
+    {
+      "id": "4",
+      "longitude": "121.495262",
+      "latitude": "31.241864",
+      "name": "东方明珠电视塔",
+      "description": "",
+      "img_url": "/images/jianan4.png",
+      "video_id": "1",
+      "video_timestamp": 556,
+      "username": "波奇"
+    },
+    {
+      "id": "5",
+      "longitude": "121.486297",
+      "latitude": "31.230076",
+      "name": "老凤祥银楼",
+      "description": "",
+      "img_url": "/images/jianan5.png",
+      "video_id": "1",
+      "video_timestamp": 803,
+      "username": "Joey"
+    },
+    {
+      "id": "6",
+      "longitude": "121.471986",
+      "latitude": "31.2335",
+      "name": "中华大楼",
+      "description": "",
+      "img_url": "/images/jianan6.png",
+      "video_id": "1",
+      "video_timestamp": 530,
+      "username": "萤火"
+    },
+    {
+      "id": "7",
+      "longitude": "121.453691",
+      "latitude": "31.240449",
+      "name": "恒丰路桥",
+      "description": "",
+      "img_url": "/images/jianan7.png",
+      "video_id": "1",
+      "video_timestamp": 52,
+      "username": "yangqingfeng"
+    },
+    {
+      "id": "8",
+      "longitude": "121.492455",
+      "latitude": "31.241403",
+      "name": "上海国际会议中心",
+      "description": "",
+      "img_url": "/images/jianan8.png",
+      "video_id": "1",
+      "video_timestamp": 250,
+      "username": "黑客马拉松"
+    }
+  ]
+}
