@@ -4,6 +4,7 @@ import { LazyImg, Waterfall } from "vue-waterfall-plugin-next";
 import "vue-waterfall-plugin-next/dist/style.css";
 import { useRoute, useRouter } from "vue-router";
 import tabbar from "@/components/Tabbar/index.vue";
+import AiMap from "@/components/Map/index.vue";
 defineOptions({
   name: "Demo"
 });
@@ -96,7 +97,9 @@ const toPointDetail = () => {
         </template>
       </Waterfall>
     </div>
-    <div v-if="activeIndex == 'attention'" class="map-waterfall">地图</div>
+    <div v-if="activeIndex == 'attention'" class="map-waterfall">
+      <AiMap />
+    </div>
     <tabbar />
   </div>
 </template>

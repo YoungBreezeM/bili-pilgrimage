@@ -3,6 +3,7 @@ import { reactive, ref } from "vue";
 import { LazyImg, Waterfall } from "vue-waterfall-plugin-next";
 import "vue-waterfall-plugin-next/dist/style.css";
 import { useRouter } from "vue-router";
+import Map from "@/components/Map/index.vue";
 defineOptions({
   name: "Demo"
 });
@@ -81,7 +82,9 @@ const watchHeight = data => {
       <p style="font-size: 0.8rem; color: #c8c5c5">Shanghai</p>
       <p>开放时间 周一至周日 12:00-18:00</p>
     </div>
-    <div class="map-content">地图</div>
+    <div class="map-content">
+      <Map />
+    </div>
     <van-floating-panel
       v-model:height="height"
       :anchors="anchors"
