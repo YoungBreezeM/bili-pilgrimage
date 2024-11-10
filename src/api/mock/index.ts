@@ -8,9 +8,28 @@ type ListResult = {
 
 export function getListApi(params?: object): Promise<ListResult> {
   return http.request({
-    url: "/list/get",
+    url: "/article/list",
     method: "get",
     params
+  });
+}
+
+export function uploadFile(formData: FormData): Promise<ListResult> {
+  return http.request({
+    url: "/common/upload",
+    method: "post",
+    headers: {
+      "Content-Type": "multipart/form-data"
+    },
+    data: formData
+  });
+}
+
+export function push(data): Promise<ListResult> {
+  return http.request({
+    url: "/article/add",
+    method: "post",
+    data
   });
 }
 

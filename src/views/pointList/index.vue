@@ -6,9 +6,8 @@ import { useRoute, useRouter } from "vue-router";
 import tabbar from "@/components/Tabbar/index.vue";
 import AiMap from "@/components/Map/index.vue";
 import data from "@/assets/data.json";
-
-const copy = JSON.parse(JSON.stringify(data));
-const list = [...data.points, ...data.points];
+import { getListApi } from "@/api/mock/index";
+const list = reactive([]);
 defineOptions({
   name: "Demo"
 });
@@ -16,9 +15,28 @@ defineOptions({
 const router = useRouter();
 const route = useRoute();
 const activeIndex = ref("list");
+
+const initList = async () => {
+  const dataList = await getListApi({});
+
+  dataList.forEach(e => {
+    list.push({
+      name: e.title,
+      img_url: e.main_photo_url,
+      username: "joey"
+    });
+  });
+  const copy = JSON.parse(JSON.stringify(data));
+
+  copy.points.forEach(i => {
+    list.push(i);
+  });
+};
+
 onMounted(() => {
   //
   activeIndex.value = route.query.tabName ? route.query.tabName : "list";
+  initList();
 });
 
 watch(
@@ -85,11 +103,13 @@ const toPointDetail = id => {
       <Waterfall
         :list="list"
         :breakpoints="breakpoints"
+        :crossOrigin="true"
         backgroundColor="rgb(211, 211, 211)"
       >
         <template #default="{ item, url, index }">
           <div class="card" @click="toPointDetail(item.id)">
-            <LazyImg :url="item.img_url" />
+            <img :src="item.img_url" />
+            <!-- <LazyImg :url="item.img_url" :crossOrigin="true" /> -->
             <div class="carf-desc">
               <p style="margin-left: 0.5rem">{{ item.name }}</p>
               <p style="margin-left: 0.5rem">

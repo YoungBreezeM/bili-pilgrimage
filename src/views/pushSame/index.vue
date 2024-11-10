@@ -5,7 +5,7 @@ import "vue-waterfall-plugin-next/dist/style.css";
 import { useRoute, useRouter } from "vue-router";
 import tabbar from "@/components/Tabbar/index.vue";
 import data from "@/assets/data.json";
-
+import { uploadFile } from "@/api/mock/index";
 defineOptions({
   name: "Demo"
 });
@@ -68,7 +68,13 @@ const toVideo = () => {
 };
 
 const toList = () => {
-  router.push("/push");
+  router.push({
+    path: "/push",
+    query: {
+      ...route.query,
+      up_img: upImg.value
+    }
+  });
 };
 const toBack = () => {
   router.back();
@@ -92,7 +98,7 @@ const save = () => {
     show.value = false;
   }, 1000);
 };
-
+const upImg = ref("");
 // 处理图片上传
 const onImageUpload = (event: Event) => {
   const input = event.target as HTMLInputElement;
@@ -101,8 +107,14 @@ const onImageUpload = (event: Event) => {
   if (file) {
     const reader = new FileReader();
 
-    reader.onload = () => {
+    reader.onload = async () => {
       imageUrl.value = reader.result as string;
+      let fileData = new FormData();
+      fileData.append("file", file);
+      fileData.append("filename", `${Date.now()}`);
+
+      let res = await uploadFile(fileData);
+      upImg.value = res.fullurl;
     };
 
     reader.readAsDataURL(file);

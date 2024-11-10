@@ -3,8 +3,9 @@ import { reactive, ref, onMounted, watch } from "vue";
 
 import "vue-waterfall-plugin-next/dist/style.css";
 import { useRoute, useRouter } from "vue-router";
-import { url } from "inspector";
+import data from "@/assets/data.json";
 import AiMap from "@/components/Map/index.vue";
+import { push } from "@/api/mock";
 defineOptions({
   name: "Demo"
 });
@@ -13,9 +14,19 @@ const router = useRouter();
 const route = useRoute();
 const activeIndex = ref("list");
 const radio = ref("1");
+const fileList = reactive([]);
+const pos = ref("");
+
 onMounted(() => {
   //
   activeIndex.value = route.query.tabName ? route.query.tabName : "list";
+  const { id, up_img } = route.query;
+  if (up_img) {
+    fileList.push({ url: up_img });
+    let p = data.points.find(i => i.id === id);
+    pos.value = p.name;
+    form.value.img_url = up_img;
+  }
 });
 
 watch(
@@ -74,13 +85,13 @@ const pushDataToLocalStorage = (key, newData) => {
   // 3. 将更新后的数组存回 localStorage
   localStorage.setItem(key, JSON.stringify(data));
 };
-const toPushList = () => {
-  console.log(form.value);
-  form.value.id = Date.now();
-  form.value.name = "xx";
-  form.value.img_url = "/images/jianan8.png";
-  pushDataToLocalStorage("push-list", form.value);
-  // router.push("/point/list");
+const toPushList = async () => {
+  let res = await push({
+    "row[title]": form.value.title,
+    "row[content]": form.value.desc,
+    "row[main_photo_url]": form.value.img_url
+  });
+  router.push("/point/list");
 };
 
 const toMy = () => {
@@ -89,20 +100,7 @@ const toMy = () => {
 const toBack = () => {
   router.back();
 };
-const fileList = reactive([
-  // {
-  //   url: "/images/2233.jpg",
-  //   name: "图片1"
-  // },
-  // // Uploader 根据文件后缀来判断是否为图片文件
-  // // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
-  // {
-  //   url: "/images/2233.jpg",
-  //   name: "图片2",
-  //   isImage: true,
-  //   deletable: true
-  // }
-]);
+
 const showBottom = ref(false);
 const toMapMark = () => {
   showBottom.value = true;
@@ -189,16 +187,17 @@ const form = ref({
     </div>
     <div style="margin: 2rem; color: #ccc">
       <p @click="toMapMark">
-        <van-icon name="location" /><span style="margin-left: 0.5rem"
-          >圣地坐标</span
-        >
-        <van-icon name="arrow" style="margin-left: 70%" />
+        <van-icon name="location" />
+        <span v-if="!pos" style="margin-left: 0.5rem">圣地坐标</span>
+        <span v-if="pos" style="margin-left: 0.5rem">{{ pos }}</span>
+
+        <van-icon name="arrow" style="float: right" />
       </p>
       <p>
         <van-icon name="live" /><span style="margin-left: 0.5rem"
           >剧集图钉</span
         >
-        <van-icon name="arrow" style="margin-left: 70%" />
+        <van-icon name="arrow" style="float: right" />
       </p>
     </div>
     <van-popup

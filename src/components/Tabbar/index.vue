@@ -48,7 +48,7 @@ const tabbarData = reactive([
     icon: "",
     title: "发布",
     to: {
-      name: "/push"
+      name: ""
     }
   },
   {
