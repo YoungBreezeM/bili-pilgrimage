@@ -19,6 +19,7 @@ const activeIndex = ref("list");
 const initList = async () => {
   const dataList = await getListApi({});
 
+  dataList.reverse();
   dataList.forEach(e => {
     list.push({
       name: e.title,

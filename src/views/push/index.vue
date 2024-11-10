@@ -5,7 +5,7 @@ import "vue-waterfall-plugin-next/dist/style.css";
 import { useRoute, useRouter } from "vue-router";
 import data from "@/assets/data.json";
 import AiMap from "@/components/Map/index.vue";
-import { push } from "@/api/mock";
+import { push, uploadFile } from "@/api/mock";
 defineOptions({
   name: "Demo"
 });
@@ -132,7 +132,12 @@ const onImageUpload = (event: Event) => {
 };
 const afterRead = file => {
   fileList.push(file);
-  console.log(file);
+  let formData = new FormData();
+  formData.append("file", file.file);
+  formData.append("filename", `${Date.now()}`);
+  uploadFile(formData).then(res => {
+    form.value.img_url = res.fullurl;
+  });
 };
 const deleteFa = a => {
   console.log(a);
